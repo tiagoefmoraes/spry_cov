@@ -20,4 +20,16 @@ defmodule SpryCovTest do
       assert output =~ " 0.00% | Total"
     end)
   end
+
+  test "with failing test don't report coverage" do
+    in_fixture("failing_test", fn ->
+      {output, 2} = mix_code(["test", "--cover"])
+      assert output =~ "1 failure"
+
+      refute output =~ "Coverage"
+      refute output =~ "SpryCov"
+      refute output =~ " 0.00% | A"
+      refute output =~ " 0.00% | Total"
+    end)
+  end
 end
