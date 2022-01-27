@@ -1,18 +1,11 @@
 defmodule SpryCov do
   @moduledoc """
-  Documentation for `SpryCov`.
+  To be used as `:test_coverage` `:tool` in `mix.exs`
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> SpryCov.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  @doc false
+  def start(compile_path, opts) do
+    Mix.shell().info("SpryCov ...")
+    Mix.Tasks.Test.Coverage.start(compile_path, opts)
   end
 end
