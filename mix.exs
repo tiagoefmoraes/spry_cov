@@ -7,7 +7,7 @@ defmodule SpryCov.MixProject do
       version: "0.1.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      test_coverage: [tool: SpryCov],
+      test_coverage: [tool: SpryCov, summary: [threshold: 0], ignore_modules: []],
       preferred_cli_env: [
         "test.watch": :test
       ],
@@ -18,7 +18,7 @@ defmodule SpryCov.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger, :tools]
     ]
   end
 
