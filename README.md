@@ -50,6 +50,9 @@ Run `mix test --cover`
 
 ## TODO
 
+- Configure [GitHub Actions](https://github.com/tiagoefmoraes/spry_cov/actions/new)
+- Publish in [Hex](https://hex.pm/docs/publish)
+- Configure [ExDoc](https://github.com/elixir-lang/ex_doc#using-exdoc-with-mix) and publish on [HexDocs](https://hexdocs.pm)
 - Display filtered results when running the test for a specific file or folder
   - `mix test --cover test/lib/a_test.exs` display only coverage for `lib/a.ex`
   - `mix test --cover test/lib/sub/` display only coverage for files in `lib/sub/`
