@@ -43,34 +43,14 @@ defmodule SpryCov do
   end
 
   defp generate_cover_results(opts, coverage_callback) do
-    if summary_opts = Keyword.get(opts, :summary, true) do
-      coverage_callback.()
-      {:result, ok, _fail} = :cover.analyse(:coverage, :line)
-      ignore = opts[:ignore_modules] || []
-      modules = Enum.reject(:cover.modules(), &ignored?(&1, ignore))
+    coverage_callback.()
 
-      summary(ok, modules, summary_opts)
-    end
-  end
-
-  defp ignored?(mod, ignores) do
-    Enum.any?(ignores, &ignored_any?(mod, &1))
-  end
-
-  defp ignored_any?(mod, %Regex{} = re), do: Regex.match?(re, inspect(mod))
-  defp ignored_any?(mod, other), do: mod == other
-
-  defp summary(results, keep, summary_opts) do
-    {module_results, totals} = gather_coverage(results, keep)
+    {module_results, totals} = gather_coverage(opts)
+    summary_opts = Keyword.get(opts, :summary, true)
     threshold = get_threshold(summary_opts)
 
-    module_results =
-      module_results
-      |> Enum.filter(fn {coverage, _, _} -> coverage < threshold end)
-      |> Enum.sort(:desc)
-
-    if Enum.any?(module_results) do
-      print_summary(module_results, threshold)
+    if summary_opts do
+      summary(module_results, threshold)
     end
 
     print_total(totals)
@@ -82,11 +62,35 @@ defmodule SpryCov do
     :ok
   end
 
+  defp ignored?(mod, ignores) do
+    Enum.any?(ignores, &ignored_any?(mod, &1))
+  end
+
+  defp ignored_any?(mod, %Regex{} = re), do: Regex.match?(re, inspect(mod))
+  defp ignored_any?(mod, other), do: mod == other
+
+  defp summary(module_results, threshold) do
+    module_results =
+      module_results
+      |> Enum.filter(fn {coverage, _, _} -> coverage < threshold end)
+      |> Enum.sort(:desc)
+
+    if Enum.any?(module_results) do
+      print_summary(module_results, threshold)
+    end
+
+    :ok
+  end
+
   defp print_total(totals) do
     Mix.shell().info([:light_black, "SpryCov total coverage: #{format_number(totals, 6)}%"])
   end
 
-  defp gather_coverage(results, keep) do
+  defp gather_coverage(opts) do
+    {:result, _ok = results, _fail} = :cover.analyse(:coverage, :line)
+    ignore = opts[:ignore_modules] || []
+    keep = Enum.reject(:cover.modules(), &ignored?(&1, ignore))
+
     keep_set = MapSet.new(keep)
 
     # When gathering coverage results, we need to skip any
@@ -172,6 +176,6 @@ defmodule SpryCov do
 
   defp format_name(mod) when is_atom(mod), do: inspect(mod)
 
-  defp get_threshold(true), do: @default_threshold
+  defp get_threshold(opts) when is_boolean(opts), do: @default_threshold
   defp get_threshold(opts), do: Keyword.get(opts, :threshold, @default_threshold)
 end
