@@ -3,6 +3,8 @@ defmodule SpryCov do
   To be used as `:test_coverage` `:tool` in `mix.exs`
   """
 
+  alias SpryCov.Files
+
   @default_threshold 100
 
   @doc false
@@ -73,6 +75,7 @@ defmodule SpryCov do
     module_results =
       module_results
       |> Enum.filter(fn {coverage, _, _} -> coverage < threshold end)
+      |> filter_selected_modules()
       |> Enum.sort(:desc)
 
     if Enum.any?(module_results) do
@@ -80,6 +83,24 @@ defmodule SpryCov do
     end
 
     :ok
+  end
+
+  defp filter_selected_modules(modules) do
+    mix_test_files = Files.mix_test_files()
+
+    if Enum.empty?(mix_test_files) do
+      modules
+    else
+      supposed_lib_files = Files.supposed_lib_files(mix_test_files)
+
+      Enum.filter(modules, fn {_, name, _} ->
+        file = module_path(name)
+
+        Enum.any?(supposed_lib_files, fn modified_file ->
+          String.starts_with?(file, modified_file)
+        end)
+      end)
+    end
   end
 
   defp print_total(totals) do
