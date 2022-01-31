@@ -51,6 +51,21 @@ Some of the default [mix test options](https://hexdocs.pm/mix/Mix.Tasks.Test.htm
 
 Run `mix test --cover`
 
+SpryCov will output all files with that don't meet the threshold with the lines not covered.
+It will get very "noisy" in projects with many coverage gaps, we can workaround by using `grep`
+
+```bash
+mix test --cover | grep lib/a.ex
+```
+
+When running tests for only a few files and/or directories SpryCov will display the coverage for only those files and/or directories, there is no need for using `grep`.
+
+```bash
+mix test --cover test/a_test.exs
+```
+
+> Be careful because only the code being tested by those tests is going to be covered
+
 ## TODO
 
 - Publish in [Hex](https://hex.pm/docs/publish)
