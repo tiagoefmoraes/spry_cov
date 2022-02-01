@@ -18,7 +18,9 @@ defmodule SpryCov.MixProject do
       description: "Actionable coverage report with your test results.",
       source_url: @source_url,
       homepage_url: @source_url,
+      package: package(),
       docs: docs(),
+      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -43,6 +45,20 @@ defmodule SpryCov.MixProject do
       main: "SpryCov",
       source_ref: "v#{@version}",
       formatters: ["html"]
+    ]
+  end
+
+  defp aliases do
+    [
+      version: fn _ -> IO.puts(@version) end
+    ]
+  end
+
+  defp package do
+    [
+      maintainers: ["Tiago Moraes"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => @source_url}
     ]
   end
 end
