@@ -1,6 +1,18 @@
 defmodule SpryCov do
   @moduledoc """
   To be used as `:test_coverage` `:tool` in `mix.exs`
+
+  ## Configuration
+
+  ```elixir
+  def project() do
+    [
+      ...
+      test_coverage: [tool: SpryCov]
+      ...
+    ]
+  end
+  ```
   """
 
   alias SpryCov.Files

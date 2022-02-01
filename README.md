@@ -69,7 +69,6 @@ mix test --cover test/a_test.exs
 ## TODO
 
 - Publish in [Hex](https://hex.pm/docs/publish)
-- Configure [ExDoc](https://github.com/elixir-lang/ex_doc#using-exdoc-with-mix) and publish on [HexDocs](https://hexdocs.pm)
 
 ## License
 
