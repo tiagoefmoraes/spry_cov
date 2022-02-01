@@ -38,7 +38,7 @@ defmodule SpryCov do
     Mix.Tasks.Test.Coverage.start(compile_path, Keyword.put(opts, :summary, false))
   end
 
-  def module_path(module) do
+  defp module_path(module) do
     module.module_info(:compile)[:source]
     |> List.to_string()
     |> Path.relative_to_cwd()
