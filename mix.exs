@@ -57,7 +57,7 @@ defmodule SpryCov.MixProject do
   defp package do
     [
       maintainers: ["Tiago Moraes"],
-      licenses: ["MIT"],
+      licenses: ["Apache-2.0"],
       links: %{"GitHub" => @source_url}
     ]
   end
