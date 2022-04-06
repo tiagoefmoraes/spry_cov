@@ -1,5 +1,9 @@
 # Changelog
 
+## dev
+
+* Support for Elixir 1.12
+
 ## v0.1.0 (2022-02-01)
 
 * Only generate coverage report if all the tests pass

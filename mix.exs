@@ -8,7 +8,7 @@ defmodule SpryCov.MixProject do
     [
       app: :spry_cov,
       version: @version,
-      elixir: "~> 1.13",
+      elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: SpryCov, summary: [threshold: 0], ignore_modules: []],
       preferred_cli_env: [

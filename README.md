@@ -28,7 +28,7 @@ Add `spry_cov` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:spry_cov, "~> 0.1.0"}
+    {:spry_cov, "~> 0.1.0", only: [:test]},
   ]
 end
 ```
@@ -39,7 +39,7 @@ Configure the project in `mix.exs`:
 def project() do
   [
     ...
-    test_coverage: [tool: SpryCov]
+    test_coverage: [tool: SpryCov],
     ...
   ]
 end

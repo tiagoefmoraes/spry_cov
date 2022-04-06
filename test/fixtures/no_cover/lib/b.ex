@@ -1,3 +1,3 @@
 defmodule B do
-  def f, do: :ok
+  def f, do: raise("not covered")
 end
