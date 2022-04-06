@@ -28,7 +28,7 @@ Add `spry_cov` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:spry_cov, "~> 0.1.0", only: [:test]},
+    {:spry_cov, "~> 0.2.0", only: [:test]},
   ]
 end
 ```

@@ -1,6 +1,6 @@
 # Changelog
 
-## dev
+## v0.2.0 (2022-04-05)
 
 * Support for Elixir 1.12
 
