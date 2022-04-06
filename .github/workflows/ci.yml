@@ -6,7 +6,7 @@ jobs:
       matrix:
         # https://hexdocs.pm/elixir/compatibility-and-deprecations.html
         # https://github.com/erlef/setup-beam#compatibility-between-operating-system-and-erlangotp
-        elixir: ["1.13"]
+        elixir: ["1.13", "1.12"]
         otp: ["24", "23", "22"]
         os: ["ubuntu-20.04"]
         include:
