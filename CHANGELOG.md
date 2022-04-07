@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.0 (2022-04-07)
+
+* Don't report `defstruct` as not covered
+
 ## v0.2.0 (2022-04-05)
 
 * Support for Elixir 1.12

@@ -126,6 +126,14 @@ defmodule SpryCov do
 
     keep_set = MapSet.new(keep)
 
+    ignored_lines_by_module =
+      for module <- keep_set,
+          lines = ignored_lines(module),
+          lines != [],
+          into: %{} do
+        {module, lines}
+      end
+
     # When gathering coverage results, we need to skip any
     # entry with line equal to 0 as those are generated code.
     #
@@ -136,7 +144,11 @@ defmodule SpryCov do
     table = :ets.new(__MODULE__, [:set, :private])
 
     try do
-      for {{module, line}, cov} <- results, module in keep_set, line != 0 do
+      for {{module, line}, cov} <- results,
+          module in keep_set,
+          line != 0,
+          ignored_lines = Map.get(ignored_lines_by_module, module, []),
+          !Enum.member?(ignored_lines, line) do
         case cov do
           {1, 0} -> :ets.insert(table, {{module, line}, true})
           {0, 1} -> :ets.insert_new(table, {{module, line}, false})
@@ -211,4 +223,13 @@ defmodule SpryCov do
 
   defp get_threshold(opts) when is_boolean(opts), do: @default_threshold
   defp get_threshold(opts), do: Keyword.get(opts, :threshold, @default_threshold)
+
+  defp ignored_lines(module) do
+    {:docs_v1, _, _, _, _, _, docs} = Code.fetch_docs(module)
+
+    for {{:function, :__struct__, _}, line, _, _, %{}} <- docs,
+        into: MapSet.new() do
+      line
+    end
+  end
 end

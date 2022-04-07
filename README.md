@@ -20,6 +20,7 @@ SpryCov total coverage:   0.00%
 - Display filtered results when running the test for a specific file or folder
   - `mix test --cover test/lib/a_test.exs` display only coverage for `lib/a.ex`
   - `mix test --cover test/lib/sub/` display only coverage for files in `lib/sub/`
+- Don't report `defstruct` as not covered
 
 ## Installation
 
