@@ -65,11 +65,7 @@ When running tests for only a few files and/or directories SpryCov will display 
 mix test --cover test/a_test.exs
 ```
 
-> Be careful because only the code being tested by those tests is going to be covered
-
-## TODO
-
-- Publish in [Hex](https://hex.pm/docs/publish)
+> Be careful because only the code being tested by those tests is going to be reported
 
 ## License
 
