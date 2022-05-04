@@ -6,24 +6,24 @@ defmodule SpryCov.Files do
 
   ## Examples
 
-    iex> SpryCov.Files.mix_test_files()
+    iex> mix_test_files()
 
-    iex> SpryCov.Files.mix_test_files(["test"])
+    iex> mix_test_files(["test"])
     []
 
-    iex> SpryCov.Files.mix_test_files(["test", "--cover"])
+    iex> mix_test_files(["test", "--cover"])
     []
 
-    iex> SpryCov.Files.mix_test_files(["test", "test/spry_cov/utils_test.exs"])
+    iex> mix_test_files(["test", "test/spry_cov/utils_test.exs"])
     ["test/spry_cov/utils_test.exs"]
 
-    iex> SpryCov.Files.mix_test_files(["test", "--cover", "test/spry_cov/utils_test.exs"])
+    iex> mix_test_files(["test", "--cover", "test/spry_cov/utils_test.exs"])
     ["test/spry_cov/utils_test.exs"]
 
-    iex> SpryCov.Files.mix_test_files(["test", "test/spry_cov/"])
+    iex> mix_test_files(["test", "test/spry_cov/"])
     ["test/spry_cov/"]
 
-    iex> SpryCov.Files.mix_test_files(["test", "test/spry_cov/a_test.exs", "test/spry_cov/b_test_fixture.exs"])
+    iex> mix_test_files(["test", "test/spry_cov/a_test.exs", "test/spry_cov/b_test_fixture.exs"])
     ["test/spry_cov/a_test.exs", "test/spry_cov/b_test_fixture.exs"]
   """
   def mix_test_files(args \\ System.argv()) do
@@ -36,10 +36,10 @@ defmodule SpryCov.Files do
 
     ## Examples
 
-      iex> SpryCov.Files.supposed_lib_files([])
+      iex> supposed_lib_files([])
       []
 
-      iex> SpryCov.Files.supposed_lib_files(["test/spry_cov/utils_test.exs"])
+      iex> supposed_lib_files(["test/spry_cov/utils_test.exs"])
       ["lib/spry_cov/utils"]
   """
   def supposed_lib_files(mix_test_files) do
@@ -52,19 +52,19 @@ defmodule SpryCov.Files do
 
   ## Examples
 
-    iex> SpryCov.Files.supposed_lib_file("test/spry_cov/utils_test.exs")
+    iex> supposed_lib_file("test/spry_cov/utils_test.exs")
     "lib/spry_cov/utils"
 
-    iex> SpryCov.Files.supposed_lib_file("test/spry_cov/")
+    iex> supposed_lib_file("test/spry_cov/")
     "lib/spry_cov/"
 
-    iex> SpryCov.Files.supposed_lib_file("test/spry_cov/utils2_test.exs")
+    iex> supposed_lib_file("test/spry_cov/utils2_test.exs")
     "lib/spry_cov/utils2"
 
-    iex> SpryCov.Files.supposed_lib_file("test/spry_cov/utils_test.exs")
+    iex> supposed_lib_file("test/spry_cov/utils_test.exs")
     "lib/spry_cov/utils"
 
-    iex> SpryCov.Files.supposed_lib_file("test/spry_cov/")
+    iex> supposed_lib_file("test/spry_cov/")
     "lib/spry_cov/"
   """
   def supposed_lib_file(test_file) do
