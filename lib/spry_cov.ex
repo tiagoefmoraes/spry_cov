@@ -103,7 +103,8 @@ defmodule SpryCov do
     if Enum.empty?(mix_test_files) do
       modules
     else
-      supposed_lib_files = Files.supposed_lib_files(mix_test_files)
+      test_paths = Mix.Project.config() |> Keyword.get(:test_paths, ["test"])
+      supposed_lib_files = Files.supposed_lib_files(test_paths, mix_test_files)
 
       Enum.filter(modules, fn {_, name, _} ->
         file = module_path(name)

@@ -8,6 +8,7 @@ defmodule Mix.Tasks.SpryCov.Check do
 
       $ mix spry_cov.check
 
+  See `SpryCov.Files.supposed_lib_file/2` for information on the rules used.
   """
 
   @impl true
@@ -30,7 +31,7 @@ defmodule Mix.Tasks.SpryCov.Check do
     without_match =
       test_files
       |> Enum.count(fn test_file ->
-        lib_file = SpryCov.Files.supposed_lib_file(test_file) <> ".ex"
+        lib_file = SpryCov.Files.supposed_lib_file(test_paths, test_file) <> ".ex"
 
         if Enum.member?(lib_files, "#{lib_file}") do
           false

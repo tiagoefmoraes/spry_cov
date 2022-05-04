@@ -1,6 +1,4 @@
 defmodule SpryCov.Files do
-  @moduledoc false
-
   @doc """
   Returns the list of files and/or directories given to `mix test`
 
@@ -36,40 +34,48 @@ defmodule SpryCov.Files do
 
   ## Examples
 
-      iex> supposed_lib_files([])
+      iex> supposed_lib_files(["test"], [])
       []
 
-      iex> supposed_lib_files(["test/spry_cov/utils_test.exs"])
+      iex> supposed_lib_files(["test"], ["test/spry_cov/utils_test.exs"])
       ["lib/spry_cov/utils"]
   """
-  def supposed_lib_files(mix_test_files) do
+  def supposed_lib_files(test_paths, mix_test_files) do
     mix_test_files
-    |> Enum.map(&supposed_lib_file/1)
+    |> Enum.map(&supposed_lib_file(test_paths, &1))
   end
 
   @doc """
   Returns the supposed production file name for the test file and/or directory
 
+  Parameter `test_paths` is the `:test_paths` of your `mix.exs` configuration,
+  `test_file` is the test file to determine the supposed lib file.
+
+  Replaces `test_paths` in the start of `test_file` with `"lib/"`
+
   ## Examples
 
-      iex> supposed_lib_file("test/spry_cov/utils_test.exs")
+      iex> SpryCov.Files.supposed_lib_file(["test"], "test/spry_cov/utils_test.exs")
       "lib/spry_cov/utils"
 
-      iex> supposed_lib_file("test/spry_cov/")
+      iex> SpryCov.Files.supposed_lib_file(["test"], "test/spry_cov/")
       "lib/spry_cov/"
 
-      iex> supposed_lib_file("test/spry_cov/utils2_test.exs")
+      iex> SpryCov.Files.supposed_lib_file(["test"], "test/spry_cov/utils2_test.exs")
       "lib/spry_cov/utils2"
 
-      iex> supposed_lib_file("test/spry_cov/utils_test.exs")
+      iex> SpryCov.Files.supposed_lib_file(["test"], "test/spry_cov/utils_test.exs")
       "lib/spry_cov/utils"
 
-      iex> supposed_lib_file("test/spry_cov/")
+      iex> SpryCov.Files.supposed_lib_file(["test"], "test/spry_cov/")
+      "lib/spry_cov/"
+
+      iex> SpryCov.Files.supposed_lib_file(["test/unit"], "test/unit/spry_cov/")
       "lib/spry_cov/"
   """
-  def supposed_lib_file(test_file) do
-    test_file
-    |> String.replace_leading("test/", "lib/")
+  def supposed_lib_file(test_paths, test_file) do
+    test_paths
+    |> Enum.reduce(test_file, &String.replace_leading(&2, "#{&1}/", "lib/"))
     |> String.replace(~r"_test(_\w+)?.exs$", "")
   end
 end
