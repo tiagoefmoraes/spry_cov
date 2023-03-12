@@ -1,5 +1,5 @@
-defmodule SpryCovTest do
-  use SpryCov.Case
+defmodule SpryCov.FullCoverTest do
+  use SpryCov.Case, async: true
 
   test "with full coverage reports the coverage" do
     in_fixture("full_cover", fn ->
@@ -9,6 +9,10 @@ defmodule SpryCovTest do
       assert output =~ "SpryCov total coverage: 100.00%"
     end)
   end
+end
+
+defmodule SpryCov.NoCoverTest do
+  use SpryCov.Case, async: true
 
   test "with no coverage reports the coverage" do
     in_fixture("no_cover", fn ->
@@ -41,6 +45,10 @@ defmodule SpryCovTest do
              """
     end)
   end
+end
+
+defmodule SpryCov.FailingTest do
+  use SpryCov.Case, async: true
 
   test "with failing test don't report coverage" do
     in_fixture("failing_test", fn ->
