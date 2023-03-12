@@ -16,6 +16,7 @@ defmodule SpryCov do
   """
 
   alias SpryCov.Files
+  alias SpryCov.Lines
 
   @default_threshold 100
 
@@ -199,6 +200,7 @@ defmodule SpryCov do
     ])
 
     not_covered_lines
+    |> Lines.drop_sequential()
     |> Enum.each(fn line ->
       Mix.shell().info([
         color(percentage, threshold),
