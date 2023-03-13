@@ -1,6 +1,6 @@
 # Changelog
 
-## dev ()
+## v0.3.1 (2023-03-13)
 
 * Reduce noise in output by removing sequential lines
 * Handle multiple `:test_paths` in `mix.exs`
