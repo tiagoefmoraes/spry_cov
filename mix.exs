@@ -2,7 +2,7 @@ defmodule SpryCov.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/tiagoefmoraes/spry_cov"
-  @version "0.3.1"
+  @version "0.3.2-dev"
 
   def project do
     [

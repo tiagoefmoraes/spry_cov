@@ -1,5 +1,7 @@
 # Changelog
 
+## v0.3.2-dev ()
+
 ## v0.3.1 (2023-03-13)
 
 * Reduce noise in output by removing sequential lines
