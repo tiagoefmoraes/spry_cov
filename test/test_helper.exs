@@ -37,38 +37,18 @@ defmodule SpryCov.Case do
     end
   end
 
-  def purge(modules) do
-    Enum.each(modules, fn m ->
-      :code.purge(m)
-      :code.delete(m)
-    end)
-  end
-
   def in_fixture(which, tmp, function) do
     src = fixture_path(which)
     dest = tmp_path(String.replace(tmp, ":", "_"))
-    flag = String.to_charlist(tmp_path())
 
     File.rm_rf!(dest)
     File.mkdir_p!(dest)
     File.cp_r!(src, dest)
 
-    get_path = :code.get_path()
-    previous = :code.all_loaded()
-
-    try do
-      File.cd!(dest, function)
-    after
-      :code.set_path(get_path)
-
-      for {mod, file} <- :code.all_loaded() -- previous,
-          file == [] or (is_list(file) and List.starts_with?(file, flag)) do
-        purge([mod])
-      end
-    end
+    function.(dest)
   end
 
-  def mix_code(args, envs \\ []) when is_list(args) do
-    System.cmd("mix", args, stderr_to_stdout: true, env: envs)
+  def mix_code(args, path) when is_list(args) do
+    System.cmd("mix", args, stderr_to_stdout: true, cd: path)
   end
 end
